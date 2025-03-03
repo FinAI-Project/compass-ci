@@ -1,0 +1,4 @@
+bidict==0.23.1
+numpy==2.2.2
+pytest==8.3.4
+torch==2.4.0
