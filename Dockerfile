@@ -9,7 +9,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 RUN set -e; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git; \
+    apt-get install -y --no-install-recommends git make; \
     git config --system --add safe.directory '*'; \
     python -m venv .venv; \
     pip install -r requirements.txt; \
