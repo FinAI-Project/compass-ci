@@ -2,7 +2,7 @@ FROM python:3.12-slim-bookworm
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY scripts/ .
 
 ENV VIRTUAL_ENV="/app/.venv"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
@@ -15,3 +15,5 @@ RUN set -e; \
     pip install -r requirements.txt; \
     pip cache purge; \
     rm -rf /var/lib/apt/lists/*;
+
+ENTRYPOINT ["/app/entrypoint.sh"]
