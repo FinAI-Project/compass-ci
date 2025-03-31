@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: fengheai/compass-ci-python:latest
+          tags: fengheai/compass-runtime:latest
