@@ -17,8 +17,6 @@ else
 fi
 
 if [ -n "$WORK_DIR" ]; then
-    WORK_DIR="$WORK_DIR/$(date +%F)/$(date +%s)-$POD_NAME"
-    WORK_DIR=${WORK_DIR%-}
     mkdir -p "$WORK_DIR"
     cd "$WORK_DIR"
 fi
