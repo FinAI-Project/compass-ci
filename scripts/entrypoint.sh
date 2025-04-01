@@ -11,12 +11,14 @@ TOKEN=$(python get-token.py)
 GITHUB_REPO_OWNER=${GITHUB_REPO_OWNER:-FinAI-Project}
 REPO_URL="https://x-access-token:$TOKEN@github.com/$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME.git"
 if [ -n "$GITHUB_REF_NAME" ]; then
-    git clone --branch "$GITHUB_REF_NAME" --recurse-submodules "$REPO_URL" model
+    git clone --branch "$GITHUB_REF_NAME" --recurse-submodules "$REPO_URL"
 else
-    git clone --recurse-submodules "$REPO_URL" model
+    git clone --recurse-submodules "$REPO_URL"
 fi
 
 if [ -n "$WORK_DIR" ]; then
+    WORK_DIR="$WORK_DIR/$(date +%F)/$(date +%s)-$POD_NAME"
+    WORK_DIR=${WORK_DIR%-}
     mkdir -p "$WORK_DIR"
     cd "$WORK_DIR"
 fi

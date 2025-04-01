@@ -1,19 +1,23 @@
 FROM python:3.12-slim-bookworm
 
-WORKDIR /app
-
-COPY scripts/ .
-
-ENV VIRTUAL_ENV="/app/.venv"
-ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+ARG RUNTIME_USER=compass
 
 RUN set -e; \
     apt-get update; \
     apt-get install -y --no-install-recommends git make; \
-    git config --system --add safe.directory '*'; \
-    python -m venv .venv; \
-    pip install -r requirements.txt; \
-    pip cache purge; \
+    useradd $RUNTIME_USER; \
     rm -rf /var/lib/apt/lists/*;
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+USER $RUNTIME_USER
+WORKDIR /home/$RUNTIME_USER
+COPY scripts/ .
+SHELL ["/bin/bash", "-c"]
+RUN set -e; \
+    python -m venv .venv; \
+    source .venv/bin/activate; \
+    pip install --no-cache -r requirements.txt;
+
+ENV VIRTUAL_ENV="/home/$RUNTIME_USER/.venv"
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+ENTRYPOINT ["/home/$RUNTIME_USER/entrypoint.sh"]
