@@ -20,4 +20,4 @@ RUN set -e; \
 ENV VIRTUAL_ENV="/home/$RUNTIME_USER/.venv"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-ENTRYPOINT ["/home/$RUNTIME_USER/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
