@@ -5,9 +5,13 @@ if [ -z "$GITHUB_REPO" ]; then
     exit 1
 fi
 
+TOKEN=$(python get-token.py) || {
+    echo "get token failed: $TOKEN"
+    exit $?
+}
+
 set -e
 
-TOKEN=$(python get-token.py)
 REPO_URL="https://x-access-token:$TOKEN@github.com/$GITHUB_REPO.git"
 if [ -n "$GITHUB_REF" ]; then
     git clone --branch "$GITHUB_REF" --recurse-submodules "$REPO_URL"
@@ -15,9 +19,15 @@ else
     git clone --recurse-submodules "$REPO_URL"
 fi
 
+set +e
+
+cd "$(mktemp -d)"
+"$@"
+RETURN_CODE=$?
+
 if [ -n "$WORK_DIR" ]; then
     mkdir -p "$WORK_DIR"
-    cd "$WORK_DIR"
+    cp -R --preserve=timestamps . "$WORK_DIR"
 fi
 
-exec "$@"
+exit $RETURN_CODE
