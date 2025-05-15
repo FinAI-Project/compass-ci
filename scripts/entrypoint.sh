@@ -21,9 +21,11 @@ fi
 
 set +e
 
-cd "$(mktemp -d)"
+mkdir -p /tmp/runner
+cd /tmp/runner
 "$@"
 RETURN_CODE=$?
+touch /tmp/runner/done
 
 if [ -n "$WORK_DIR" ]; then
     mkdir -p "$WORK_DIR"

@@ -4,7 +4,7 @@ ARG RUNTIME_USER=compass
 
 RUN set -e; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git make; \
+    apt-get install -y --no-install-recommends git make rsync; \
     useradd $RUNTIME_USER; \
     rm -rf /var/lib/apt/lists/*;
 
@@ -20,4 +20,4 @@ RUN set -e; \
 ENV VIRTUAL_ENV="/home/$RUNTIME_USER/.venv"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/home/compass/entrypoint.sh"]
