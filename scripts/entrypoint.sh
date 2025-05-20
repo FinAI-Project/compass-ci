@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$GITHUB_REPO" ]; then
     echo "Error: GITHUB_REPO is required."
@@ -7,7 +7,7 @@ fi
 
 TOKEN=$(python get-token.py) || {
     echo "get token failed: $TOKEN"
-    exit $?
+    exit 1
 }
 
 set -e
@@ -24,12 +24,12 @@ set +e
 mkdir -p /tmp/runner
 cd /tmp/runner
 "$@"
-RETURN_CODE=$?
-touch /tmp/runner/done
+EXIT_CODE=$?
+echo -n $EXIT_CODE > /tmp/runner/done
 
-if [ -n "$WORK_DIR" ]; then
+if [ -n "$WORK_DIR" ] && [[ "$WORK_DIR" == /output/* ]]; then
     mkdir -p "$WORK_DIR"
     cp -R --preserve=timestamps . "$WORK_DIR"
 fi
 
-exit $RETURN_CODE
+exit $EXIT_CODE
