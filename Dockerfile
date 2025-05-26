@@ -4,7 +4,7 @@ ARG RUNTIME_USER=compass
 
 RUN set -e; \
     apt-get update; \
-    apt-get install -y --no-install-recommends git make rsync; \
+    apt-get install -y --no-install-recommends git make curl rsync; \
     useradd $RUNTIME_USER; \
     rm -rf /var/lib/apt/lists/*;
 
