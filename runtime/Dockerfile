@@ -10,7 +10,7 @@ RUN set -e; \
 
 USER $RUNTIME_USER
 WORKDIR /home/$RUNTIME_USER
-COPY scripts/ .
+COPY . .
 SHELL ["/bin/bash", "-c"]
 RUN set -e; \
     python -m venv .venv; \
