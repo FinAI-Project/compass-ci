@@ -9,8 +9,8 @@ set +e
 
 while [ ! -f "$WORK_DIR/done" ]; do
     minute=$(date +'%-M')
-    if [ $((minute % 3)) -eq 0 ]; then
-        rsync -rlt --delete --exclude=".*" "$WORK_DIR/" "$OUTPUT_DIR"
+    if [ $((minute % 10)) -eq 0 ]; then
+        rsync -rlt --exclude=".*" "$WORK_DIR/" "$OUTPUT_DIR"
     fi
     sleep 60
 done

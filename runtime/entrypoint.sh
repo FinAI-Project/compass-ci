@@ -23,8 +23,8 @@ set +e
 
 mkdir -p /tmp/runner
 cd /tmp/runner
-if [ -n "$WORK_DIR" ] && [ -d "$WORK_DIR" ]; then
-    rsync -rltv "$WORK_DIR/" .
+if [ -n "$OUTPUT_DIR" ] && [ -d "$OUTPUT_DIR" ]; then
+    rsync -rltv "$OUTPUT_DIR/" .
 fi
 "$@"
 EXIT_CODE=$?
