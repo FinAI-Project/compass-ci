@@ -26,6 +26,9 @@ cd /tmp/runner
 if [ -n "$OUTPUT_DIR" ] && [ -d "$OUTPUT_DIR" ]; then
     rsync -rltv "$OUTPUT_DIR/" .
 fi
+if [ -f "done" ]; then
+    rm done
+fi
 "$@"
 EXIT_CODE=$?
 echo -n $EXIT_CODE > /tmp/runner/done
